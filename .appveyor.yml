@@ -1,0 +1,41 @@
+image: Visual Studio 2017
+
+cache: C:\Tools\vcpkg\installed\
+
+environment:
+  VCPKG_DIR: C:\Tools\vcpkg
+  GENERATOR: "Visual Studio 15 2017 Win64"
+
+platform:
+  - x64
+ 
+configuration:
+  - Release
+  - Debug
+
+# init:
+#   - cd %VCPKG_DIR%
+#   - git pull
+#   - echo.set(VCPKG_BUILD_TYPE release) >> %VCPKG_DIR%\triplets\%PLATFORM%-windows.cmake
+#   - .\bootstrap-vcpkg.bat
+#   - vcpkg version
+#   - cd %APPVEYOR_BUILD_FOLDER%
+
+# install:
+#   - vcpkg install curl --triplet %PLATFORM%-windows
+#   - vcpkg list
+
+build:
+  parallel: true
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - cmake -G "%GENERATOR%"
+          -DCMAKE_TOOLCHAIN_FILE=%VCPKG_DIR%\scripts\buildsystems\vcpkg.cmake
+          -DVCPKG_LIBRARY_LINKAGE="dynamic"
+          .
+  - cmake --build . --config %CONFIGURATION%
+
+after_build:
+  - if "%CONFIGURATION%" == "Release" %APPVEYOR_BUILD_FOLDER%\Release\bupcy.exe i -h
+  - if "%CONFIGURATION%" == "Release" %APPVEYOR_BUILD_FOLDER%\tests\Release\test_bupcy.exe
