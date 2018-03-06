@@ -14,8 +14,9 @@ configuration:
   - Debug
 
 install:
-  - vcpkg install curl --triplet %PLATFORM%-windows
-  - vcpkg list
+  - ps: Get-ChildItem -Path C:\Tools\curl -Recurse
+  # - vcpkg install curl --triplet %PLATFORM%-windows
+  # - vcpkg list
 
 build:
   parallel: true
