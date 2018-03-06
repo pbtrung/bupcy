@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <curl/curl.h>
 
 #include "CException/CException.h"
 #include "utils/common.h"
@@ -249,11 +248,6 @@ int main(int argc, char *argv[]) {
 		exit(e);
     }
 #endif
-
-    CURL *curl;
-    curl = curl_easy_init();
-    curl_easy_cleanup(curl);
-    curl_global_cleanup();
     
     Try {
         if (argc == 1) {

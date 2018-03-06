@@ -31,9 +31,8 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - cmake -G "%GENERATOR%"
           -DCMAKE_TOOLCHAIN_FILE="%VCPKG_DIR%\scripts\buildsystems\vcpkg.cmake"
-          -DVCPKG_APPLOCAL_DEPS=OFF
-          -DCURL_LIBRARIES="C:\Tools\vcpkg\installed\x64-windows\lib\libcurl.lib"
-          -DCURL_LIBRARY="C:\Tools\vcpkg\installed\x64-windows\lib\libcurl.lib"
+          -DCURL_LIBRARIES="%VCPKG_DIR%\installed\%PLATFORM%-windows\lib\libcurl.lib"
+          -DCURL_LIBRARY="%VCPKG_DIR%\installed\%PLATFORM%-windows\lib\libcurl.lib"
           .
   - cmake --build . --config %CONFIGURATION%
 
