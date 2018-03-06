@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # find ./include \( -name "*.h" -or -name "*.c" \) ! -path "./include/*/sqlite3.h" -print0 | xargs -0 clang-format -i
 # find ./src \( -name "*.h" -or -name "*.c" \) ! -path "./src/*/sqlite3.c" -print0 | xargs -0 clang-format -i
