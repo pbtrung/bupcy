@@ -22,7 +22,7 @@ init:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 install:
-  - vcpkg install curl[core,ssl,http2,ssh] --triplet %PLATFORM%-windows
+  - vcpkg install curl[http2,ssh] --triplet %PLATFORM%-windows
   - vcpkg list
 
 build:
