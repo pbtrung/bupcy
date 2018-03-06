@@ -35,7 +35,7 @@ string(LENGTH "${CMAKE_SOURCE_DIR}/" SOURCE_PATH_SIZE)
 
 set(CMAKE_C_STANDARD 99)
 if (UNIX_WITH_SUPPORT_COMPILERS)
-	set(BUPCY_DEBUG_FLAGS -Og -Wall -Wextra -Wpedantic -Wno-missing-field-initializers -Wno-implicit-fallthrough)
+	set(BUPCY_DEBUG_FLAGS -Og -Wall -Wextra -Wpedantic)
 	add_definitions("-DSOURCE_PATH_SIZE=${SOURCE_PATH_SIZE}")
 elseif (WIN32_WITH_MSVC)
 	set(BUPCY_DEBUG_FLAGS)

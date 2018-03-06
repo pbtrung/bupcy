@@ -1,6 +1,6 @@
 file(GLOB_RECURSE VENDOR_SRC RELATIVE "${PROJECT_SOURCE_DIR}/vendor" "*.c")
-file(GLOB_RECURSE PCRE2_SRC RELATIVE "${PROJECT_SOURCE_DIR}/vendor" "oniguruma/*.c")
-list(REMOVE_ITEM VENDOR_SRC ${PCRE2_SRC})
+file(GLOB_RECURSE ONIG_SRC RELATIVE "${PROJECT_SOURCE_DIR}/vendor" "oniguruma/*.c")
+list(REMOVE_ITEM VENDOR_SRC ${ONIG_SRC})
 add_library(vendor "${VENDOR_SRC}")
 
 target_compile_definitions(vendor
