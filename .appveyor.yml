@@ -21,8 +21,10 @@ init:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 install:
-  - vcpkg install curl --triplet %PLATFORM%-windows
+  - ps: Get-ChildItem -Path C:\Tools\vcpkg\installed -Recurse
+  - vcpkg install curl[ssh] --triplet %PLATFORM%-windows
   - vcpkg list
+  - ps: Get-ChildItem -Path C:\Tools\vcpkg\installed -Recurse
 
 build:
   parallel: true
