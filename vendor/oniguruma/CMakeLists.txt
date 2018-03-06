@@ -43,10 +43,6 @@ configure_file(config.h.cmake.in "${PROJECT_SOURCE_DIR}/vendor/oniguruma/config.
 
 set(HAVE_PROTOTYPES 1)
 set(ONIG_SRC
-    regint.h
-    regparse.h
-    regenc.h
-    st.h
     regerror.c
     regparse.c
     regext.c
@@ -101,3 +97,4 @@ set(ONIG_SRC
 
 add_library(onig ${ONIG_SRC})
 target_compile_options(onig PRIVATE "$<$<CONFIG:DEBUG>:${VENDOR_DEBUG_FLAGS}>")
+target_compile_definitions(onig PRIVATE ONIGURUMA_EXPORT)
