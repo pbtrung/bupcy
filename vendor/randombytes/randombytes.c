@@ -43,7 +43,6 @@
 static int randombytes_win32_randombytes(void* buf, const size_t n)
 {
 	HCRYPTPROV ctx;
-	ULONG i;
 	BOOL tmp;
 
 	tmp = CryptAcquireContext(&ctx, NULL, NULL, PROV_RSA_FULL,
