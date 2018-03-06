@@ -13,15 +13,17 @@ configuration:
   - Release
   - Debug
 
+install:
+  - vcpkg install curl:%PLATFORM%-windows
+  - vcpkg list
+
 build:
   parallel: true
 
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - cmake -G "%GENERATOR%"
-          -DCURL_INCLUDE_DIRS="C:\Tools\curl\include"
-          -DCURL_LIBRARIES="C:\Tools\curl\lib\libcurl.a"
-          -DCURL_LIBRARY="C:\Tools\curl\lib\libcurl.a"
+          -DCMAKE_TOOLCHAIN_FILE="%VCPKG_DIR%\scripts\buildsystems\vcpkg.cmake"
           .
   - cmake --build . --config %CONFIGURATION%
 
