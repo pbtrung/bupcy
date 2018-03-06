@@ -13,17 +13,17 @@ configuration:
   - Release
   - Debug
 
-# init:
-#   - cd %VCPKG_DIR%
-#   - git pull
-#   - echo.set(VCPKG_BUILD_TYPE release) >> %VCPKG_DIR%\triplets\%PLATFORM%-windows.cmake
-#   - .\bootstrap-vcpkg.bat
-#   - vcpkg version
-#   - cd %APPVEYOR_BUILD_FOLDER%
+init:
+  - cd %VCPKG_DIR%
+  - git pull
+  - echo.set(VCPKG_BUILD_TYPE release) >> %VCPKG_DIR%\triplets\%PLATFORM%-windows.cmake
+  - .\bootstrap-vcpkg.bat
+  - vcpkg version
+  - cd %APPVEYOR_BUILD_FOLDER%
 
-# install:
-#   - vcpkg install curl --triplet %PLATFORM%-windows
-#   - vcpkg list
+install:
+  - vcpkg install curl --triplet %PLATFORM%-windows
+  - vcpkg list
 
 build:
   parallel: true

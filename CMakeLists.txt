@@ -24,11 +24,13 @@ configure_file(
     "${PROJECT_SOURCE_DIR}/include/bupcy_cfg.h"
 )
 
+find_package(CURL REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(
 	"${PROJECT_SOURCE_DIR}/include"
 	"${PROJECT_SOURCE_DIR}/vendor"
+	"${CURL_INCLUDE_DIRS}"
 )
 
 string(LENGTH "${CMAKE_SOURCE_DIR}/" SOURCE_PATH_SIZE)
@@ -50,7 +52,7 @@ add_subdirectory(vendor)
 add_subdirectory(src)
 
 add_executable(bupcy src/main.c)
-target_link_libraries(bupcy bupcysrc vendor onig ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(bupcy bupcysrc vendor onig ${CMAKE_THREAD_LIBS_INIT} ${CURL_LIBRARIES})
 target_compile_options(bupcy PRIVATE "$<$<CONFIG:DEBUG>:${BUPCY_DEBUG_FLAGS}>")
 
 add_subdirectory(tests)
