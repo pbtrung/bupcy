@@ -22,7 +22,7 @@ build_script:
           -DCURL_INCLUDE_DIRS="C:\Tools\curl\include"
           -DCURL_LIBRARIES="C:\Tools\curl\lib\libcurl.a"
           -DCURL_LIBRARY="C:\Tools\curl\lib\libcurl.a"
-          -DCURL_STATICLIB
+          -DCURL_STATICLIB=1
           .
   - cmake --build . --config %CONFIGURATION%
 
