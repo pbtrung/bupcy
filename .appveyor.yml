@@ -14,7 +14,7 @@ configuration:
   - Debug
 
 install:
-  - vcpkg install curl[ssh] --triplet %PLATFORM%-windows
+  - vcpkg install curl --triplet %PLATFORM%-windows
   - vcpkg list
 
 build:
