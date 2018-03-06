@@ -20,8 +20,8 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - cmake -G "%GENERATOR%"
           -DCURL_INCLUDE_DIRS="C:\Tools\curl\include"
-          -DCURL_LIBRARIES="C:\Tools\curl\bin\libcurl.dll"
-          -DCURL_LIBRARY="C:\Tools\curl\bin\libcurl.dll"
+          -DCURL_LIBRARIES="C:\Tools\curl\lib\libcurl.a"
+          -DCURL_LIBRARY="C:\Tools\curl\lib\libcurl.a"
           .
   - cmake --build . --config %CONFIGURATION%
 
