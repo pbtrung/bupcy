@@ -18,6 +18,7 @@ init:
   - git pull
   - .\bootstrap-vcpkg.bat
   - vcpkg version
+  - cd %APPVEYOR_BUILD_FOLDER%
 
 install:
   - vcpkg install curl[ssh] --triplet %PLATFORM%-windows
