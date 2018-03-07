@@ -52,5 +52,7 @@ void show_hint(const char *hint_cmd);
 void show_error_msg(const char *msg, const char *hint_cmd);
 
 bool bupcy_dir_exists(const char *path);
+bool bupcy_mkdir_recursive(char *path);
+void stb_fixpath(char *path);
 
 #endif // UTILS_H
