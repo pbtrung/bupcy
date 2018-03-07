@@ -5,12 +5,11 @@
 #include "utils/common.h"
 #include "utils/utils.h"
 
-#if !defined(_WIN32)
-    #include <errno.h>
-    #include <sys/stat.h>
-    #include <sys/types.h>
-#endif
+#include <errno.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
+#if defined(_WIN32)
 wchar_t *stb_from_utf8(wchar_t *buffer, const char *ostr, int n) {
     unsigned char *str = (unsigned char *)ostr;
     uint32_t c;
@@ -126,6 +125,7 @@ char *bupcy_shorten(const wchar_t *str) {
     char *buffer = bupcy_malloc(len * sizeof(char));
     return stb_to_utf8(buffer, str, len);
 }
+#endif
 
 void *bupcy_malloc(size_t n) {
     assert(n > 0);
@@ -317,4 +317,15 @@ exit:
     bstrListDestroy(parts);
     bdestroy(dir_path);
     return ret;
+}
+
+bool bupcy_file_exists(const char *path) {
+#if defined(_WIN32)
+    struct _stat buf;
+    int rc = _stat(path, &buf);
+#else
+    struct stat buf;
+    int rc = stat(path, &buf);
+#endif
+    return rc == 0;
 }

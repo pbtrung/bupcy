@@ -11,7 +11,7 @@ TEST test_mkdir_recursive() {
 		char path[] = "ワンピース\\Tankōbon\\雑誌\\コミックス";
 		int rc = bcatcstr(home_dir, path);
 		ASSERT(rc == BSTR_OK);
-    	bool b = bupcy_mkdir_recursive(home_dir->data);
+    	bool b = bupcy_mkdir_recursive((char *)home_dir->data);
     	ASSERT(b == true);
     	bdestroy(home_dir);
 	}

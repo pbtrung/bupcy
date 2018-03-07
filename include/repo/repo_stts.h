@@ -24,5 +24,6 @@ repo_stts_t *repo_stts_init();
 void repo_stts_free(repo_stts_t *repo_stts);
 void repo_stts_validate(repo_stts_t *repo_stts, const char *hint_cmd);
 void repo_stts_check_size(double val, rc_t rc, const char *hint_cmd);
+bool repo_stts_check_name(repo_stts_t *repo_stts);
 
 #endif // REPO_STTS_H

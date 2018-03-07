@@ -29,12 +29,21 @@ void repo_stts_check_size(double val, rc_t rc, const char *hint_cmd) {
     }
 }
 
+bool repo_stts_check_name(repo_stts_t *repo_stts) {
+    bool b = false;
+    return b;
+}
+
 void repo_stts_validate(repo_stts_t *repo_stts, const char *hint_cmd) {
     if (repo_stts->min_size >= repo_stts->max_size) {
         show_error_msg("minimum size must be smaller than maximum size", hint_cmd);
         check_exception(1, BUPCY_REPO_STTS_VALIDATE_ERR);
     }
-    if (bupcy_dir_exists((char *)repo_stts->config_dir->data) == true) {
-        repo_stts->config_dir_exists = true;
+    if (bupcy_dir_exists((char *)repo_stts->config_dir->data) == false) {
+        bool b = bupcy_mkdir_recursive((char *)repo_stts->config_dir->data);
+        check_log_exception(b == false, BUPCY_MKDIR_ERR);
+    } else {
+        bool b = repo_stts_check_name(repo_stts);
+        check_log_exception(b == true, BUPCY_REPO_NAME_EXISTS_ERR);
     }
 }

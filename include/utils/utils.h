@@ -30,14 +30,13 @@
 
 #if defined(_WIN32)
     #define BUPCY_PATH_SEPARATOR '\\'
+	wchar_t *stb_from_utf8(wchar_t *buffer, const char *ostr, int n);
+	char *stb_to_utf8(char *buffer, const wchar_t *str, int n);
+	wchar_t *bupcy_widen(const char *str);
+	char *bupcy_shorten(const wchar_t *str);
 #else
     #define BUPCY_PATH_SEPARATOR '/'
 #endif
-
-wchar_t *stb_from_utf8(wchar_t *buffer, const char *ostr, int n);
-char *stb_to_utf8(char *buffer, const wchar_t *str, int n);
-wchar_t *bupcy_widen(const char *str);
-char *bupcy_shorten(const wchar_t *str);
 
 void *bupcy_malloc(size_t n);
 void *bupcy_calloc(size_t num, size_t size);
@@ -52,6 +51,7 @@ void show_hint(const char *hint_cmd);
 void show_error_msg(const char *msg, const char *hint_cmd);
 
 bool bupcy_dir_exists(const char *path);
+bool bupcy_file_exists(const char *path);
 bool bupcy_mkdir_recursive(char *path);
 void stb_fixpath(char *path);
 

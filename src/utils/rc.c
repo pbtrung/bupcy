@@ -34,6 +34,10 @@ const char *rc_msg(rc_t rc) {
         return "BUPCY_MIN_CHUNK_SIZE_ERR";
     case BUPCY_REPO_STTS_VALIDATE_ERR:
         return "BUPCY_REPO_STTS_VALIDATE_ERR";
+    case BUPCY_MKDIR_ERR:
+        return "BUPCY_MKDIR_ERR";
+    case BUPCY_REPO_NAME_EXISTS_ERR:
+        return "BUPCY_REPO_NAME_EXISTS_ERR";
     default:
         return "Unknown return code";
     }
