@@ -21,6 +21,7 @@ enum rc_t {
     BUPCY_MKDIR_ERR,
     BUPCY_REPO_NAME_EXISTS_ERR,
     BUPCY_FILE_ERR,
+    BUPCY_PARSE_TOML_ERR,
 };
 typedef enum rc_t rc_t;
 

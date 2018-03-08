@@ -5,6 +5,7 @@
 #include "bupcy_cfg.h"
 #include "argtable3/argtable3.h"
 #include "repo/repo_stts.h"
+#include "repo/repo_init.h"
 
 // clang-format off
 
@@ -188,6 +189,7 @@ void parse_init_cmd(int argc, char *argv[], repo_stts_t *repo_stts) {
         printf("\n");
         printf("      * %s", "Dropbox:            dbx://path/to/backup/directory");
         printf("\n\n");
+        exit(BUPCY_SUCCESS);
 
     // bupcy init
     } else if (init_argtbl_rc == 0 || i_argtbl_rc == 0) {
@@ -262,6 +264,7 @@ int main(int argc, char *argv[]) {
                 repo_stts_t *repo_stts = repo_stts_init();
                 parse_init_cmd(argc, argv, repo_stts);
                 repo_stts_validate(repo_stts, (char *)hint_cmd->data);
+                repo_init(repo_stts);
                 repo_stts_free(repo_stts);
                 bdestroy(hint_cmd);
             }
@@ -278,3 +281,4 @@ int main(int argc, char *argv[]) {
 
     return rc;
 }
+    

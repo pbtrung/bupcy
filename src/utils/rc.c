@@ -40,6 +40,8 @@ const char *rc_msg(rc_t rc) {
         return "BUPCY_REPO_NAME_EXISTS_ERR";
     case BUPCY_FILE_ERR:
         return "BUPCY_FILE_ERR";
+    case BUPCY_PARSE_TOML_ERR:
+        return "BUPCY_PARSE_TOML_ERR";
     default:
         return "Unknown return code";
     }

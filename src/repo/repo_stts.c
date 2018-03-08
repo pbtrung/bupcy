@@ -1,6 +1,7 @@
 #include "utils/common.h"
 #include "repo/repo_stts.h"
 #include "utils/utils.h"
+#include "toml/toml.h"
 
 repo_stts_t *repo_stts_init() {
     repo_stts_t *repo_stts = bupcy_malloc(sizeof(repo_stts_t));
@@ -30,24 +31,41 @@ void repo_stts_check_size(double val, rc_t rc, const char *hint_cmd) {
     }
 }
 
-bool repo_stts_check_name(repo_stts_t *repo_stts) {
-    bool b = false;
-    rc_t rc = BUPCY_SUCCESS;
-
-    if (repo_stts->config_dir->data[repo_stts->config_dir->slen - 1] == BUPCY_PATH_SEPARATOR) {
-        rc = bdelete(repo_stts->config_dir, repo_stts->config_dir->slen - 1, 1);
+bstring repo_stts_get_conf_file_path(repo_stts_t *repo_stts) {
+    stb_fixpath((char *)repo_stts->config_dir->data);
+    if (repo_stts->config_dir->data[repo_stts->config_dir->slen - 1] == '/') {
+        int rc = bdelete(repo_stts->config_dir, repo_stts->config_dir->slen - 1, 1);
         check_log_exception(rc != BUPCY_SUCCESS, BUPCY_BSTRING_ERR);
     }
-    bstring conf_path = bformat("%s%c%s", repo_stts->config_dir->data, BUPCY_PATH_SEPARATOR, "bupcy.conf");
+    bstring conf_path = bformat("%s%c%s", repo_stts->config_dir->data, '/', "bupcy.conf");
+    check_log_exception(conf_path == NULL, BUPCY_BSTRING_ERR);
+    return conf_path;
+}
+
+bool repo_stts_check_name(repo_stts_t *repo_stts) {
+    bool b = false;
+
+    bstring conf_path = repo_stts_get_conf_file_path(repo_stts);
     if (bupcy_file_exists((char *)conf_path->data) == false) {
         FILE *fp = bupcy__fopen((char *)conf_path->data, "ab+");
         check_log_exception(fp == NULL, BUPCY_FILE_ERR);
         fclose(fp);
-        goto exit;
     } else {
+        FILE *fp = bupcy__fopen((char *)conf_path->data, "rb");
+        check_log_exception(fp == NULL, BUPCY_FILE_ERR);
+        char errbuf[256];
+        toml_table_t *conf = NULL;
+        conf = toml_parse_file(fp, errbuf, sizeof(errbuf));
+        fclose(fp);
+        check_log_exception(conf == NULL, BUPCY_PARSE_TOML_ERR);
+        toml_table_t *repo = NULL;
+        repo = toml_table_in(conf, (char *)repo_stts->name->data);
+        if (repo != NULL) {
+            b = true;
+        }
+        toml_free(conf);
     }
 
-exit:
     bdestroy(conf_path);
     return b;
 }
