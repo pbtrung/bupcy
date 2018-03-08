@@ -320,12 +320,21 @@ exit:
 }
 
 bool bupcy_file_exists(const char *path) {
+    bool b = false;
 #if defined(_WIN32)
-    struct _stat buf;
-    int rc = _stat(path, &buf);
+    wchar_t *wpath = bupcy_widen(path);
+    check_log_exception(wpath == NULL, BUPCY_WIDEN_ERR);
+    unsigned int attribs = GetFileAttributesW(wpath);
+    if ((attribs != 0xFFFFFFFF) && !(attribs & FILE_ATTRIBUTE_DIRECTORY)) {
+        b = true;
+    }
+    bupcy_free(wpath);
 #else
     struct stat buf;
     int rc = stat(path, &buf);
+    if (rc == 0 && (buf.st_mode & S_IFREG)) {
+        b = true;
+    }
 #endif
-    return rc == 0;
+    return b;
 }
