@@ -10,6 +10,7 @@ repo_stts_t *repo_stts_init() {
     repo_stts->name = NULL;
     repo_stts->dest = NULL;
     repo_stts->config_dir_exists = false;
+    repo_stts->conf_file_exists = false;
     repo_stts->config_dir = bupcy_get_default_config_dir();
 
     return repo_stts;
@@ -31,6 +32,23 @@ void repo_stts_check_size(double val, rc_t rc, const char *hint_cmd) {
 
 bool repo_stts_check_name(repo_stts_t *repo_stts) {
     bool b = false;
+    rc_t rc = BUPCY_SUCCESS;
+
+    if (repo_stts->config_dir->data[repo_stts->config_dir->slen - 1] == BUPCY_PATH_SEPARATOR) {
+        rc = bdelete(repo_stts->config_dir, repo_stts->config_dir->slen - 1, 1);
+        check_log_exception(rc != BUPCY_SUCCESS, BUPCY_BSTRING_ERR);
+    }
+    bstring conf_path = bformat("%s%c%s", repo_stts->config_dir->data, BUPCY_PATH_SEPARATOR, "bupcy.conf");
+    if (bupcy_file_exists((char *)conf_path->data) == false) {
+        FILE *fp = bupcy__fopen((char *)conf_path->data, "ab+");
+        check_log_exception(fp == NULL, BUPCY_FILE_ERR);
+        fclose(fp);
+        goto exit;
+    } else {
+    }
+
+exit:
+    bdestroy(conf_path);
     return b;
 }
 
@@ -42,8 +60,10 @@ void repo_stts_validate(repo_stts_t *repo_stts, const char *hint_cmd) {
     if (bupcy_dir_exists((char *)repo_stts->config_dir->data) == false) {
         bool b = bupcy_mkdir_recursive((char *)repo_stts->config_dir->data);
         check_log_exception(b == false, BUPCY_MKDIR_ERR);
-    } else {
-        bool b = repo_stts_check_name(repo_stts);
-        check_log_exception(b == true, BUPCY_REPO_NAME_EXISTS_ERR);
+        repo_stts->config_dir_exists = true;
+    }
+    if (repo_stts_check_name(repo_stts) == true) {
+        show_error_msg("repository name has already existed", hint_cmd);
+        check_log_exception(1, BUPCY_REPO_STTS_VALIDATE_ERR);
     }
 }

@@ -338,3 +338,20 @@ bool bupcy_file_exists(const char *path) {
 #endif
     return b;
 }
+
+FILE *bupcy__fopen(const char *filename, const char *mode) {
+    FILE *fp = NULL;
+#if defined(_WIN32)
+    wchar_t *wfilename = bupcy_widen(filename);
+    check_log_exception(wfilename == NULL, BUPCY_WIDEN_ERR);
+    wchar_t *wmode = bupcy_widen(mode);
+    check_log_exception(wmode == NULL, BUPCY_WIDEN_ERR);
+    fp = _wfopen(wfilename, wmode);
+    bupcy_free(wfilename);
+    bupcy_free(wmode);
+#else
+    fp = fopen(filename, mode);
+#endif
+
+    return fp;
+}

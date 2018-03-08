@@ -50,6 +50,7 @@ bstring bupcy_get_default_config_dir();
 void show_hint(const char *hint_cmd);
 void show_error_msg(const char *msg, const char *hint_cmd);
 
+FILE *bupcy__fopen(const char *filename, const char *mode);
 bool bupcy_dir_exists(const char *path);
 bool bupcy_file_exists(const char *path);
 bool bupcy_mkdir_recursive(char *path);

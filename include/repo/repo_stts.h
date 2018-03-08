@@ -15,6 +15,7 @@ struct repo_stts_t {
     bstring dest;
     bstring config_dir;
     bool config_dir_exists;
+    bool conf_file_exists;
     uint32_t min_size;
     uint32_t max_size;
 };

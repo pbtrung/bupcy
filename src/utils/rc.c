@@ -38,6 +38,8 @@ const char *rc_msg(rc_t rc) {
         return "BUPCY_MKDIR_ERR";
     case BUPCY_REPO_NAME_EXISTS_ERR:
         return "BUPCY_REPO_NAME_EXISTS_ERR";
+    case BUPCY_FILE_ERR:
+        return "BUPCY_FILE_ERR";
     default:
         return "Unknown return code";
     }

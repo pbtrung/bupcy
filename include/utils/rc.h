@@ -20,6 +20,7 @@ enum rc_t {
     BUPCY_REPO_STTS_VALIDATE_ERR,
     BUPCY_MKDIR_ERR,
     BUPCY_REPO_NAME_EXISTS_ERR,
+    BUPCY_FILE_ERR,
 };
 typedef enum rc_t rc_t;
 
